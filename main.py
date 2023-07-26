@@ -61,8 +61,8 @@ class InputText(BaseModel):
     input_text: str
 
 
-@app.post("/get_arch_suggestion")
-async def get_arch_suggestion(input_data: InputText):
+@app.post("/get_graph")
+async def get_graph(input_data: InputText):
     print("Getting suggestion for: ", input_data.input_text)
     try:
         response = openai.ChatCompletion.create(
@@ -83,8 +83,8 @@ async def get_arch_suggestion(input_data: InputText):
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.post("/get_arch_suggestion_mock")
-async def get_arch_suggestion(input_data: InputText):
+@app.post("/get_graph_mock")
+async def get_graph_mock(input_data: InputText):
     print("Getting suggestion for: ", input_data.input_text)
     try:
         return {
