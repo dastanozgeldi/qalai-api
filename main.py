@@ -24,7 +24,7 @@ You are a helpful assistant only capable of communicating with valid JSON, and n
 
 ONLY return a valid JSON object (no other text is necessary). Be correct and concise.
 
-Here is an example of simple JSON objects that show the expected behavior:
+Here is an example of simple JSON object that show the expected behavior:
 {
     "topics_description": "Here you should define all must-study topics connected to the topic the user wants to sharpen. At least 10 topics should be defined.",
     "topic_list": [
@@ -61,8 +61,8 @@ Here is an example of simple JSON objects that show the expected behavior:
     ]
 }
 
-topic_list should contain at least 10 topics. This'll help user study further.
-Here is the topic the user wants to sharpen: %s
+topic_list should contain at least 3 topics. This'll help user study further.
+Here is the topic the user wants to sharpen:
 """
 
 
@@ -79,9 +79,14 @@ async def get_graph(input_data: InputText):
             messages=[
                 {
                     "role": "system",
-                    "content": PROMPT % input_data.input_text,
+                    "content": PROMPT,
+                },
+                {
+                    "role": "user",
+                    "content": input_data.input_text,
                 },
             ],
+            max_tokens=256,
         )
         response_message = response["choices"][0]["message"]["content"]
 
