@@ -26,7 +26,6 @@ ONLY return a valid JSON object (no other text is necessary). Be correct and con
 
 Here is an example of simple JSON object that show the expected behavior:
 {
-    "topics_description": "Here you should define all must-study topics connected to the topic the user wants to sharpen. At least 10 topics should be defined.",
     "topic_list": [
         {
             "topic": "Derivatives",
@@ -61,7 +60,7 @@ Here is an example of simple JSON object that show the expected behavior:
     ]
 }
 
-topic_list should contain at least 3 topics. This'll help user study further.
+topic_list should contain at least 10 topics. This'll help user study further.
 Here is the topic the user wants to sharpen:
 """
 
@@ -86,7 +85,6 @@ async def get_graph(input_data: InputText):
                     "content": input_data.input_text,
                 },
             ],
-            max_tokens=256,
         )
         response_message = response["choices"][0]["message"]["content"]
 
