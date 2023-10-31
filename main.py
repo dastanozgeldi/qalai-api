@@ -22,8 +22,11 @@ app.add_middleware(
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
-class InputText(BaseModel):
-    input_text: str
+class InputUser(BaseModel):
+    current_state: str
+    goal: str
+    start_date: str
+    end_date: str
 
 
 class InputTodo(BaseModel):
@@ -53,8 +56,7 @@ async def get_todo(input_data: InputTodo):
 
 
 @app.post("/get_graph")
-async def get_graph(input_data: InputText):
-    print("Getting suggestion for: ", input_data.input_text)
+async def get_graph(input_data: InputUser):
     try:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -65,7 +67,7 @@ async def get_graph(input_data: InputText):
                 },
                 {
                     "role": "user",
-                    "content": input_data.input_text,
+                    "content": f"I'm currently in this state: {input_data.current_state}. My goal: {input_data.goal}. I want to achieve this goal by this date: {input_data.end_date}. I started from this date: {input_data.start_date}. Give me a roadmap that plans out my journey to achieve this goal.",
                 },
             ],
         )
